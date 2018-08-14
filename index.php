@@ -41,7 +41,7 @@
 
 					    <h1 style="text-align:center;margin-bottom:50px">Register</h1>
 
-					    <form class="acc_form">
+					    <form action="signup.php" method="POST" class="acc_form">
 					    	<p>Name</p>
 					    	<input type="text">
 					    	<p>Surname</p>
@@ -49,9 +49,9 @@
 					    	<p>Email</p>
 					    	<input type="text">
 					    	<p>Password</p>
-					    	<input type="text">
+					    	<input type="password">
 
-					    	<input type="submit" value="Create Account"/>
+					    	<input name="submit" type="submit" value="Create Account"/>
 					    </form>
 					
 					  </div>
