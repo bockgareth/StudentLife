@@ -1,10 +1,14 @@
+
+create database if not exists `ShoppingCart`;
+
+use `ShoppingCart`;
+
 create table if not exists Customer (
   `customer_id` int(11) primary key auto_increment,
   `first_name` varchar(255),
   `last_name` varchar(255),
   `cellphone` varchar(20),
   `email` varchar(255),
-  `photo` varchar(255),
   `password` varchar(255)
 );
 
@@ -29,16 +33,16 @@ create table if not exists Inventory (
   `campus_id` int(11),
   `quantity` int(11),
   primary key (`product_id`, `campus_id`),
-  foreign key fk_prod_id (`product_id`) references Product (`product_id`),
-  foreign key fk_campus_id (`campus_id`) references Campus (`campus_id`)
+  foreign key fk_inv_prod_id (`product_id`) references Product (`product_id`),
+  foreign key fk_inv_campus_id (`campus_id`) references Campus (`campus_id`)
 );
 
 create table if not exists Favorites (
   `customer_id` int(11),
   `product_id` int(11),
   primary key (`customer_id`, `product_id`),
-  foreign key fk_cust_id (`customer_id`) references Customer (`customer_id`),
-  foreign key fk_prod_id (`product_id`) references Product (`product_id`)
+  foreign key fk_fav_cust_id (`customer_id`) references Customer (`customer_id`),
+  foreign key fk_fav_prod_id (`product_id`) references Product (`product_id`)
 );
 
 create table if not exists OrderTable (
@@ -47,14 +51,14 @@ create table if not exists OrderTable (
   `date_of_purchase` date,
   `delivery_date` date,
   `payment` double(10,2),
-  foreign key fk_cust_id (`customer_id`) references Customer (`customer_id`)
+  foreign key fk_ord_cust_id (`customer_id`) references Customer (`customer_id`)
 );
 
 create table if not exists OrderLine (
   `product_id` int(11),
   `order_id` int(11),
   `quantity` int(11),
-  primary key (`product_id`, `campus_id`),
-  foreign key fk_prod_id (`product_id`) references Product (`product_id`),
-  foreign key fk_order_id (`order_id`) references OrderTable (`order_id`)
+  primary key (`product_id`, `order_id`),
+  foreign key fk_lin_prod_id (`product_id`) references Product (`product_id`),
+  foreign key fk_lin_order_id (`order_id`) references OrderTable (`order_id`)
 );
