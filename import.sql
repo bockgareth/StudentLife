@@ -13,9 +13,9 @@ create table if not exists Product (
   `name` varchar(255),
   `description` varchar(255),
   `price` double(10,2),
-  `photo` int(11),
+  `photo_id` int(11),
   `promotion` char(1),
-  `category` varchar(255),
+  `category` varchar(255)
 );
 
 create table if not exists Campus (
@@ -29,8 +29,8 @@ create table if not exists Inventory (
   `campus_id` int(11),
   `quantity` int(11),
   primary key (`product_id`, `campus_id`),
-  foreign key fk_prod_id (`product_id`) references product (`product_id`),
-  foreign key fk_campus_id (`campus_id`) references campus (`campus_id`)
+  foreign key fk_prod_id (`product_id`) references Product (`product_id`),
+  foreign key fk_campus_id (`campus_id`) references Campus (`campus_id`)
 );
 
 create table if not exists Favorites (
@@ -38,7 +38,7 @@ create table if not exists Favorites (
   `product_id` int(11),
   primary key (`customer_id`, `product_id`),
   foreign key fk_cust_id (`customer_id`) references Customer (`customer_id`),
-  foreign key fk_prod_id (`product_id`) references product (`product_id`)
+  foreign key fk_prod_id (`product_id`) references Product (`product_id`)
 );
 
 create table if not exists OrderTable (
@@ -47,7 +47,7 @@ create table if not exists OrderTable (
   `date_of_purchase` date,
   `delivery_date` date,
   `payment` double(10,2),
-  foreign key fk_cust_id (`customer_id`) references Customer (`customer_id`),
+  foreign key fk_cust_id (`customer_id`) references Customer (`customer_id`)
 );
 
 create table if not exists OrderLine (
