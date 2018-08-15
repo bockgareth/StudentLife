@@ -4,6 +4,7 @@
     public $init = false;
     public $inventory = [];
     public $shopping_cart = [];
+    public $total;
 
     public function __construct() {
       include 'connection.php';
@@ -34,7 +35,7 @@
     }
 
     public function get_product_list() { 
-      $subtotal = 0;
+      $this->total = 0;
       if (count($this->inventory) > 0) { ?>
         
         <table style="width:100%;border-collapse:collapse">
@@ -50,18 +51,18 @@
             </td>
             <td style="vertical-align:top;width:13%">
               <h3 style="margin-top:0px; margin-bottom:30%">R<?php echo $info['price'] ?></h3>
-              <img style="margin-right:15px" src="images/prodUnfav.png">
+              <a href="<?php echo $_SERVER['SCRIPT_NAME']; ?>?phpsessid=<?php echo session_id(); ?>&item-to-remove=<?php echo $id ?>"><img style="margin-right:15px" src="images/prodUnfav.png"></a>
               <a href="<?php echo $_SERVER['SCRIPT_NAME']; ?>?phpsessid=<?php echo session_id(); ?>&item-to-add=<?php echo $id ?>"><img src="images/cartUnshop.png" width="" height=""></a>
               <h5 style="margin-top:30px"><?php echo $this->shopping_cart[$id] ?> in your basket</h5>
               <h5 style="margin-top:30px">Subtotal: R<?php printf('%.2f',$info['price'] * $this->shopping_cart[$id])  ?></h5>
-              
             </td>
           </tr>
-          <?php $subtotal += ($info['price'] * $this->shopping_cart[$id]);
+          <?php $this->total += ($info['price'] * $this->shopping_cart[$id]);
         } ?>
         </table> 
-        <h4>TOTAL: <?php printf('R%.2f', $subtotal) ?></h4>
-        <a href="<?php echo $_SERVER['SCRIPT_NAME']; ?>?phpsessid=<?php echo session_id(); ?>&emptyCart=true">Empty Cart</a><br><br>
+        <h4>TOTAL: <?php printf('R%.2f', $this->total) ?></h4>
+        <a href="<?php echo $_SERVER['SCRIPT_NAME']; ?>?phpsessid=<?php echo session_id(); ?>&empty-cart=true">Empty Cart</a><br><br>
+        <h3><a href="checkout.php?phpsessid=<?php echo session_id(); ?>">Checkout</a></h3>
       <?php }
     }
 
@@ -79,7 +80,7 @@
 
     public function remove_item() {
       $prod_id = $_GET['item-to-remove'];
-      if (!array_key_exists($prod_id, $this->shopping_cart))
+      if (array_key_exists($prod_id, $this->shopping_cart))
         if ($this->shopping_cart[$prod_id] > 0)
           $this->shopping_cart[$prod_id]--;
     }
@@ -90,27 +91,39 @@
     }
 
     public function process_user_input() {
-      if (!empty($_GET['item-to-add'])) {
+      if (!empty($_GET['item-to-add'])) 
         $this->add_item();
-      }
 
-      if (!empty($_GET['item-to-remove'])){
+      if (!empty($_GET['item-to-remove']))
+        $this->remove_item();
 
-      }
-        //$this->remove_item();
-
-      if (!empty($_GET['emptyCart'])) 
+      if (!empty($_GET['empty-cart'])) 
         $this->empty_cart();
+      
+      if (!empty($_GET['checkout']))
+        $this->checkout();
     }
 
     public function checkout() {
+      $first_name = explode(' ', $_SESSION['current_user'])[0];
+      $sql = 'select * from Customer where first_name = "'.$first_name.'"';
+      if ($row = $this->conn->query($sql)->fetch_assoc()) {
+        $user_id = $row['customer_id'];
+      }
+
+      $sql = 'insert into OrderTable (customer_id, date_of_purchase, delivery_date, payment) values ("'.$user_id.'", CURRENT_DATE(), DATE_ADD(CURRENT_DATE(), INTERVAL 3 DAY), "'.$this->total.'")';
+      
+      $this->conn->query($sql);
+
       $products_ordered = 0;
-      foreach ($this->shopping_cart as $prod_id => $quantity) {
+      foreach ($this->shopping_cart as $product_id => $quantity) {
         if ($quantity > 0) {
           $products_ordered++;
-          $sql = 'insert into ';
+          $sql = 'insert into OrderLine (product_id, order_id, quantity) values ("'.$product_id.'", "'.session_id().'", "'.$quantity.'")';
+        
           $this->conn->query($sql);
         }
       }
+      header('Location: products.php?empty-cart=true');
     }
   }

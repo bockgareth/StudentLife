@@ -29,7 +29,7 @@
 			<div class="wrap">
 				<a href="#"><img src="images/Logo.png" alt="" style="margin-top:10px"/></a>
 				<div class="dropdown" style="float:right;margin-top:10px;padding-bottom:10px">
-					<a href="#" class="account">Gareth Abrahams<span style="font-size:12px;color:black;margin-left:10px"/>▼</span></a>	<div class="account-content">
+					<a href="#" class="account"><?php echo $_SESSION['current_user']; ?><span style="font-size:12px;color:black;margin-left:10px"/>▼</span></a>	<div class="account-content">
 						<ul>
 							<li><a href="#">My Account</a></li>
 							<li><a href="#">My Cart</a></li>

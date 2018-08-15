@@ -46,17 +46,18 @@ create table if not exists Favorites (
 );
 
 create table if not exists OrderTable (
-  `order_id` int(11) primary key auto_increment,
+  `order_table_id` int(11) primary key auto_increment,
   `customer_id` int(11),
-  `date_of_purchase` date,
-  `delivery_date` date,
+  `order_id` varchar(255),
+  `date_of_purchase` datetime,
+  `delivery_date` datetime,
   `payment` double(10,2),
   foreign key fk_ord_cust_id (`customer_id`) references Customer (`customer_id`)
 );
 
 create table if not exists OrderLine (
   `product_id` int(11),
-  `order_id` int(11),
+  `order_id` varchar(255),
   `quantity` int(11),
   primary key (`product_id`, `order_id`),
   foreign key fk_lin_prod_id (`product_id`) references Product (`product_id`),
