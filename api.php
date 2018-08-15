@@ -111,7 +111,7 @@
         $user_id = $row['customer_id'];
       }
 
-      $sql = 'insert into OrderTable (customer_id, date_of_purchase, delivery_date, payment) values ("'.$user_id.'", CURRENT_DATE(), DATE_ADD(CURRENT_DATE(), INTERVAL 3 DAY), "'.$this->total.'")';
+      $sql = 'insert into OrderTable (customer_id, order_id, date_of_purchase, delivery_date, payment) values ("'.$user_id.'", "'.session_id().'", CURRENT_DATE(), DATE_ADD(CURRENT_DATE(), INTERVAL 3 DAY), "'.$this->total.'")';
       
       $this->conn->query($sql);
 
