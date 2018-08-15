@@ -1,6 +1,6 @@
 <?php
   class OnlineStore {
-    private $conn;
+    private $conn = NULL;
     private $inventory = [];
     private $shopping_cart = [];
 
@@ -12,6 +12,19 @@
     public function __destruct() {
       if (!$this->conn->connect_error)
         $this->conn->close();
+    }
+
+    public function set_inventory() {
+      $sql = 'select * from Product';
+      if ($result = $this->conn->query($sql)) {
+        while ($row = $result->fetch_assoc()) {
+          $this->inventory[$row['product_id']] = [];
+          $this->inventory[$row['product_id']]['name'] = $row['name'];
+          $this->inventory[$row['product_id']]['description'] = $row['description'];
+          $this->inventory[$row['product_id']]['price'] = $row['price'];
+          $this->shopping_cart[$row['product_id']] = 0;
+        }
+      }
     }
 
     public function get_product_list() {

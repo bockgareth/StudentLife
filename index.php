@@ -1,3 +1,4 @@
+<?php session_start(); ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -6,90 +7,98 @@
 </head>
 
 <body>
-		<div id="header"> <!-- start of header -->
-			<div class="wrap">
-				<a href="#"><img src="images/Logo.png" alt="" style="margin-top:10px"/></a>
-				<div class="dropdown" style="float:right;margin-top:10px;padding-bottom:10px">
+<div id="header"> <!-- start of header -->
+	<div class="wrap">
+		<a href="#"><img src="images/Logo.png" alt="" style="margin-top:10px"/></a>
+		<div class="dropdown" style="float:right;margin-top:10px;padding-bottom:10px">
 
-				<!-- DROPDOWN PANEL -->
-		<!--		
-					<div class="dropdown" style="float:right;margin-top:10px;padding-bottom:10px">
-						<div class="dropdown-content">
-						</div>
-					</div>
-			-->
-
-			<!-- WHEN LOGGED IN -->
-
-			<!--		<a href="#" class="account">Gareth Abrahams<span style="font-size:12px;color:black;margin-left:10px"/>▼</span></a>
-			-->
-
-			<!-- WHEN NOT LOGGED IN -->
-					<span style="float:right">
-					<a href="#" class="account">Login</a>
-					|
-					<a href="#" class="account">Register</a>
-					</span>
-
-
-
-					<!-- REGISTRATION POP-UP -->
-					<div id="register" class="modal-box">
-
-					  <div class="box-content">
-					    <span class="exit">x</span>
-
-					    <h1 style="text-align:center;margin-bottom:50px">Register</h1>
-
-					    <form action="signup.php" method="POST" class="acc_form">
-					    	<p>Name</p>
-					    	<input type="text">
-					    	<p>Surname</p>
-					    	<input type="text">
-					    	<p>Email</p>
-					    	<input type="text">
-					    	<p>Password</p>
-					    	<input type="password">
-
-					    	<input name="submit" type="submit" value="Create Account"/>
-					    </form>
-					
-					  </div>
-
-					</div>
-
-
-					<!-- LOGIN POP-UP -->
-
-					<div id="login" class="modal-box">
-
-					  <div class="box-content">
-					    <span class="exit">x</span>
-
-					    <h1 style="text-align:center;margin-bottom:50px">Log In</h1>
-
-					    <form class="acc_form">
-					    	<p>Email</p>
-					    	<input type="text">
-					    	<p>Password</p>
-					    	<input type="text">
-
-					    	<input type="submit" value="Login"/>
-					    </form>
-					  </div>
-					</div>
-
-					<!-- MUST BE LOGGED IN FOR THIS TO APPEAR ON THE DROPDOWN PANEL
-						<div class="account-content">
-						<ul>
-							<li><a href="#">My Account</a></li>
-							<li><a href="#">My Cart</a></li>
-							<li><a href="#">My Favourites</a></li>
-							<li><a href="#">Log Out</a></li>
-						</ul>
-					</div>
-					-->
+		<!-- DROPDOWN PANEL -->
+<!--		
+			<div class="dropdown" style="float:right;margin-top:10px;padding-bottom:10px">
+				<div class="dropdown-content">
 				</div>
+			</div>
+	-->
+
+	<!-- WHEN LOGGED IN -->
+
+	<!--		<a href="#" class="account">Gareth Abrahams<span style="font-size:12px;color:black;margin-left:10px"/>▼</span></a>
+	-->
+
+	<!-- WHEN NOT LOGGED IN -->
+	<span style="float:right">
+	<?php 
+		if (isset($_SESSION['current_user'])) {
+			echo '<a>'.$_SESSION['current_user'].'</a> | <a href="logout.php" class="account">Logout</a>';
+		} else {
+			echo '<a class="account">Login</a>
+			|
+			<a class="account">Register</a>';
+		}
+	?>
+	</span>
+
+
+
+	<!-- REGISTRATION POP-UP -->
+	<div id="register" class="modal-box">
+
+		<div class="box-content">
+			<span class="exit">x</span>
+
+			<h1 style="text-align:center;margin-bottom:50px">Register</h1>
+
+			<form action="signup.php" method="POST" class="acc_form">
+				<p>First name</p>
+				<input required minlength="2" name="firstName" type="text">
+				<p>Last name</p>
+				<input required minlength="2" name="lastName"ype="text">
+				<p>Cellphone</p>
+				<input required minlength="9" name="cellphone" type="text">
+				<p>Email</p>
+				<input required name="email" type="email">
+				<p>Password</p>
+				<input required minlength="6" name="password" type="password">
+
+				<input name="submit" type="submit" value="Create Account"/>
+			</form>
+	
+		</div>
+
+	</div>
+
+
+	<!-- LOGIN POP-UP -->
+
+	<div id="login" class="modal-box">
+
+		<div class="box-content">
+			<span class="exit">x</span>
+
+			<h1 style="text-align:center;margin-bottom:50px">Log In</h1>
+
+			<form action="signin.php" method="POST" class="acc_form">
+				<p>Email</p>
+				<input name="email" type="email">
+				<p>Password</p>
+				<input minlength="6" name="password" type="text">
+
+				<input name="submit" type="submit" value="Login"/>
+			</form>
+		</div>
+	</div>
+
+			<!-- MUST BE LOGGED IN FOR THIS TO APPEAR ON THE DROPDOWN PANEL
+				<div class="account-content">
+				<ul>
+					<li><a href="#">My Account</a></li>
+					<li><a href="#">My Cart</a></li>
+					<li><a href="#">My Favourites</a></li>
+					<li><a href="#">Log Out</a></li>
+				</ul>
+			</div>
+			-->
+		</div>
 
 
 				
