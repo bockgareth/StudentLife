@@ -1,7 +1,7 @@
 
-create database if not exists `ShoppingCart`;
+create database if not exists `TheShoppingCart`;
 
-use `ShoppingCart`;
+use `TheShoppingCart`;
 
 create table if not exists Customer (
   `customer_id` int(11) primary key auto_increment,
@@ -12,26 +12,30 @@ create table if not exists Customer (
   `password` varchar(255)
 );
 
+create table if not exists Category (
+  `category_id` int(11) primary key auto_increment,
+  `category_name` varchar(50)
+);
+
 create table if not exists Product (
   `product_id` int(11) primary key auto_increment,
-  `name` varchar(255),
+  `product_name` varchar(255),
   `description` varchar(255),
   `price` double(10,2),
-  `photo_id` int(11),
-  `promotion` char(1),
-  `category` varchar(255)
+  `photo_id` varchar(255),
+  `category_id` int(11),
+   foreign key fk_prod_cat_id (`category_id`) references Category(`category_id`)
 );
 
 create table if not exists Campus (
   `campus_id` int(11) primary key auto_increment,
-  `address` varchar(255),
-  `telephone` varchar(255)
+  `campus_name` varchar(255)
 );
 
 create table if not exists Inventory (
   `product_id` int(11),
   `campus_id` int(11),
-  `quantity` int(11),
+  `stock` int(11),
   primary key (`product_id`, `campus_id`),
   foreign key fk_inv_prod_id (`product_id`) references Product (`product_id`),
   foreign key fk_inv_campus_id (`campus_id`) references Campus (`campus_id`)

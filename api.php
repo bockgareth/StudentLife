@@ -18,15 +18,21 @@
 
     public function set_inventory() {
       if ($this->init == false) {
-        $sql = 'select * from Product';
+        $sql = 'select * 
+            from Product 
+            join Inventory on Product.product_id = Inventory.product_id 
+            join Campus on Inventory.campus_id = Campus.campus_id';
         if ($result = $this->conn->query($sql)) {
           $this->inventory = [];
           $this->shopping_cart = [];
           while (($row = $result->fetch_assoc()) != NULL) {
             $this->inventory[$row['product_id']] = [];
-            $this->inventory[$row['product_id']]['name'] = $row['name'];
+            $this->inventory[$row['product_id']]['name'] = $row['product_name'];
             $this->inventory[$row['product_id']]['description'] = $row['description'];
             $this->inventory[$row['product_id']]['price'] = $row['price'];
+            $this->inventory[$row['product_id']]['photo'] = $row['photo_id'];
+            $this->inventory[$row['product_id']]['campus'] = $row['campus_name'];
+            $this->inventory[$row['product_id']]['stock'] = $row['stock'];
             $this->shopping_cart[$row['product_id']] = 0;
           }
         }
@@ -41,12 +47,12 @@
           <?php foreach ($this->inventory as $id => $info) { ?> 
             <tr style="display:block;border-bottom: 2px solid #e0e0e0; padding-bottom:2%; margin-bottom:20px;">
             <td style="width:20%"> 
-              <img src="images/products/jhtp.jpg" width="170" height="170">
+              <img src="<?php echo $info['photo'] ?>" width="170" height="215">
             </td>
             <td style="vertical-align:top; width:67%; padding-left:10px;">
               <h4 style="margin-top:0px"><?php echo $info['name'] ?></h4>
               <p><?php echo $info['description'] ?></p>
-              <h4>Mowbray</h4>
+              <h4><?php echo $info['campus'] ?></h4>
             </td>
             <td style="vertical-align:top;width:13%">
               <h3 style="margin-top:0px; margin-bottom:30%">R<?php echo $info['price'] ?></h3>
@@ -64,7 +70,8 @@
             
             
               </a>
-              <h5 style="margin-top:30px"><?php echo $this->shopping_cart[$id] ?> in your basket</h5>
+              <h5 style="margin-top:30px">In stock: <?php echo $info['stock'] ?></h5>
+              <h6 style="margin-top:30px"><?php echo $this->shopping_cart[$id] ?> in your basket</h6>
               <h5 style="margin-top:30px">Subtotal: R<?php printf('%.2f',$info['price'] * $this->shopping_cart[$id])  ?></h5>
             </td>
           </tr>
@@ -140,6 +147,13 @@
       if (!empty($_GET['checkout']))
         if ($_GET['checkout'] != 'success')
           $this->checkout();
+
+      if (!empty($_GET['checkout']))
+        if ($_GET['checkout'] == 'success') {
+          $this->init = false;
+          header('Location: products.php');
+        }
+          
     }
 
     public function checkout() {
@@ -152,11 +166,18 @@
       $sql = 'insert into OrderTable (customer_id, order_id, date_of_purchase, delivery_date, payment) values ("'.$user_id.'", "'.session_id().'", CURRENT_DATE(), DATE_ADD(CURRENT_DATE(), INTERVAL 3 DAY), "'.$this->total.'")';
       
       $this->conn->query($sql);
-
+      echo $sql;
       foreach ($this->shopping_cart as $product_id => $quantity) {
         if ($quantity > 0) {
           $sql = 'insert into OrderLine (product_id, order_id, quantity) values ("'.$product_id.'", "'.session_id().'", "'.$quantity.'")';
           if (!$this->conn->query($sql)) {echo 'falied';};
+          $count = $quantity;
+          for ($i = 0; $i < $count; $i++) {
+            $sql = 'update Inventory
+            set stock = stock - 1 
+            where product_id = "'.$product_id.'"';
+            $this->conn->query($sql);
+          }
         }
       }
 

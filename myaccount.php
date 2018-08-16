@@ -46,7 +46,7 @@
       echo $first_name;
       echo '<br><br>';
       $sql = '
-      select OrderLine.quantity, Product.name, Product.price, OrderTable.date_of_purchase 
+      select OrderLine.quantity, Product.product_name, Product.price, OrderTable.date_of_purchase 
         from OrderLine 
         join Product 
         on OrderLine.product_id = Product.product_id 
@@ -54,12 +54,12 @@
         on OrderLine.order_id = OrderTable.order_id 
         join Customer on OrderTable.customer_id = Customer.customer_id
         where Customer.first_name = "'.$first_name.'"';
-
+        echo $sql;
         if ($result = $store->conn->query($sql)) {
           while (($row = $result->fetch_assoc()) != NULL) { ?>
             <tr>
               <td><?php echo $row['quantity']; ?></td>
-              <td><?php echo $row['name']; ?></td>
+              <td><?php echo $row['product_name']; ?></td>
               <td><?php echo $row['price']; ?></td>
               <td><?php echo $row['date_of_purchase']; ?></td>
             </tr>

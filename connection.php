@@ -1,5 +1,5 @@
 <?php
-  $database_name = 'ShoppingCart';
+  $database_name = 'TheShoppingCart';
   $conn = @new mysqli('localhost', 'root', '', $database_name);
   
   if ($conn->connect_errno)
