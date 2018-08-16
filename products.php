@@ -20,16 +20,27 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title></title>
+	<title>Products</title>
 	<link rel="stylesheet"  href="css/stylesheet.css" />
 </head>
 
 <body>
 		<div id="header"> <!-- start of header -->
 			<div class="wrap">
-				<a href="#"><img src="images/Logo.png" alt="" style="margin-top:10px"/></a>
-				<div class="dropdown" style="float:right;margin-top:10px;padding-bottom:10px">
-					<a href="#" class="account"><?php echo $_SESSION['current_user']; ?><span style="font-size:12px;color:black;margin-left:10px"/>▼</span></a>	<div class="account-content">
+    	<span style="float:right">
+      <?php
+      if (isset($_SESSION['current_user'])) {
+			  echo '<a style="color:white" href="myaccount.php">'.$_SESSION['current_user'].'</a> | <a href="logout.php" class="account">Logout</a>';
+      } else {
+        echo '<a class="account">Login</a>
+        |
+        <a class="account">Register</a>';
+      }
+      ?>
+      </span>
+				<!-- <a href="#"><img src="images/Logo.png" alt="" style="margin-top:10px"/></a> -->
+				<!-- <div class="dropdown" style="float:right;margin-top:10px;padding-bottom:10px">
+					<a href="#" class="account"><span style="font-size:12px;color:black;margin-left:10px"/>▼</span></a>	<div class="account-content">
 						<ul>
 							<li><a href="#">My Account</a></li>
 							<li><a href="#">My Cart</a></li>
@@ -37,7 +48,7 @@
 							<li><a href="#">Log Out</a></li>
 						</ul>
 					</div>
-				</div>
+				</div> -->
 				<div id="right-block" style="clear:right;margin-bottom:10px">
 					<ul>
 						<a href="#" style="color:white"><li class="icon-container dropdown"><img src="images/favourite icon.png" /><span class="icon-pos">0</span></a>
@@ -48,7 +59,7 @@
 							</ul>
 						</div>
 						</li>
-						<a href="#" style="color:white"><li class="icon-container dropdown"><img src="images/cart.png" /><span class="icon-pos">0</span></a>
+						<a href="#" style="color:white"><li class="icon-container dropdown"><img src="images/cart.png" /><span class="icon-pos"><?php echo $store->get_items_count(); ?></span></a>
 							<div class="dropdown-content">
 								<ul>
 									<li>Java <span style="float:right">R600</span></li>
@@ -95,7 +106,22 @@
 
 
 		<div id="main" class="wrap"> <!-- start of main -->
+        <?php
 
+        if (isset($_GET['login'])) 
+				  if($_GET['login'] === 'false') 
+            echo '<h2 style="color:red">Please login</h2>';
+            
+        if (isset($_GET['checkout']))
+          if ($_GET['checkout'] === 'success') {
+            echo '<h2 style="color:green">Order successful</h2>';
+            echo '<h4 style="color:green">Thank you</h4>'; 
+          }
+
+        if (isset($_GET['cart']))
+          if ($_GET['cart'] === 'empty')
+            echo '<h2 style="color:red">Cart is empty</h2>';
+        ?>
 				<h2 style="padding: 20px 0px 20px 0px">Products</h2>
 
 					<div 

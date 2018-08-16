@@ -14,15 +14,15 @@
         while ($row = $result->fetch_assoc()) {
           if ($row['email'] == $email && $row['password'] == trim($hashed_password)) {
             $_SESSION['current_user'] = $row['first_name'].' '.$row['last_name'];
-            header('Location: index.php');
+            header('Location: index.php?login=success');
           }
           else {
-            echo 'Failed to login.';
+            header('Location: index.php?login=invalid');
           }
         }
       }
       else {
-        echo 'This user does not exist. Please consider signing up.';
+        header('Location: index.php?login=invalid');
       }
     }
   }

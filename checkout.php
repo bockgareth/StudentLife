@@ -2,6 +2,9 @@
   session_start();
   include 'api.php';
 
+  if (!isset($_SESSION['current_user']))
+    header('Location: products.php?login=false');
+
   if (class_exists('OnlineStore')) {
     if (isset($_SESSION['current_store'])) {
       $store = unserialize($_SESSION['current_store']);
@@ -15,6 +18,10 @@
     echo 'The OnlineStore class is not available';
     $store = NULL;
   }
+
+  
+  if (!($store->get_items_count() > 0))
+    header('Location: products.php?cart=empty');
 
 ?>
 
@@ -30,33 +37,37 @@
 <body>
   <table style="width:100%;border-collapse:collapse">
     <tr style="display:block;border-bottom: 2px solid #e0e0e0; padding-bottom:2%; margin-bottom:20px;">
-      <th style="width:20%"> 
+      <th style="width:35%"> 
         Name
       </th>
-      <th style="vertical-align:top; width:67%; padding-left:10px;">
+      <th style="vertical-align:top; width:20%; padding-left:10px;">
         # in basket
       </th>
-      <th style="vertical-align:top;width:13%">
+      <th style="vertical-align:top;width:25%">
         Subtotal
       </th>
+      <th "vertical-align:top;width:20%"></th>
     </tr>
 
     <?php foreach ($store->inventory as $id => $info) {
       if ($store->shopping_cart[$id] > 0) { ?>
       <tr style="display:block;border-bottom: 2px solid #e0e0e0; padding-bottom:2%; margin-bottom:20px;">
-      <td style="width:20%"> 
+      <td style="width:35%"> 
         <?php echo $info['name'] ?>
       </td>
-      <td style="vertical-align:top; width:67%; padding-left:10px;">
+      <td style="vertical-align:top; width:20%; padding-left:10px;">
         <?php echo $store->shopping_cart[$id] ?>
       </td>
-      <td style="vertical-align:top;width:13%">
+      <td style="vertical-align:top;width:25%">
         R<?php printf('%.2f',$info['price'] * $store->shopping_cart[$id]) ?>
+      </td>
+      <td style="vertical-align:top;width:20%">
+        <a href="<?php echo $_SERVER['SCRIPT_NAME']; ?>?phpsessid=<?php echo session_id(); ?>&remove-row=<?php echo $id ?>">Remove this row</a>
       </td>
     </tr>   
       <?php }} ?>
   </table> 
-  <h3><a href="<?php echo $_SERVER['SCRIPT_NAME']; ?>?phpsessid=<?php echo session_id(); ?>&checkout=success">Confirm checkout</a></h3>
+  <h3><a href="<?php echo $_SERVER['SCRIPT_NAME']; ?>?phpsessid=<?php echo session_id(); ?>&checkout=true">Confirm checkout</a></h3>
   <h4><a href="products.php">Back to products</a></h4>
 </body>
 </html>

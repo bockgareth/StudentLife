@@ -34,10 +34,9 @@
       }
     }
 
-    public function get_product_list() { 
+    public function get_product_list() {
       $this->total = 0;
-      if (count($this->inventory) > 0) { ?>
-        
+      if (count($this->inventory) > 0) { ?> 
         <table style="width:100%;border-collapse:collapse">
           <?php foreach ($this->inventory as $id => $info) { ?> 
             <tr style="display:block;border-bottom: 2px solid #e0e0e0; padding-bottom:2%; margin-bottom:20px;">
@@ -52,7 +51,19 @@
             <td style="vertical-align:top;width:13%">
               <h3 style="margin-top:0px; margin-bottom:30%">R<?php echo $info['price'] ?></h3>
               <a href="<?php echo $_SERVER['SCRIPT_NAME']; ?>?phpsessid=<?php echo session_id(); ?>&item-to-remove=<?php echo $id ?>"><img style="margin-right:15px" src="images/prodUnfav.png"></a>
-              <a href="<?php echo $_SERVER['SCRIPT_NAME']; ?>?phpsessid=<?php echo session_id(); ?>&item-to-add=<?php echo $id ?>"><img src="images/cartUnshop.png" width="" height=""></a>
+              <a href="<?php echo $_SERVER['SCRIPT_NAME']; ?>?phpsessid=<?php echo session_id(); ?>&item-to-add=<?php echo $id ?>">
+              
+              <?php
+                if ($this->shopping_cart[$id] > 0) {
+                  echo '<img src="images/cartShop.png" width="" height="">';
+                } else {
+                  echo '<img src="images/cartUnshop.png" width="" height="">';
+                }
+              ?>
+              
+            
+            
+              </a>
               <h5 style="margin-top:30px"><?php echo $this->shopping_cart[$id] ?> in your basket</h5>
               <h5 style="margin-top:30px">Subtotal: R<?php printf('%.2f',$info['price'] * $this->shopping_cart[$id])  ?></h5>
             </td>
@@ -73,6 +84,10 @@
 
     public function add_item() {
       $prod_id = $_GET['item-to-add'];
+
+      if ($this->shopping_cart[$prod_id] > 0)
+        echo '<script>alert("This item has already been added");</script>';
+
       if (array_key_exists($prod_id, $this->shopping_cart)) 
         $this->shopping_cart[$prod_id] += 1;
       
@@ -85,9 +100,28 @@
           $this->shopping_cart[$prod_id]--;
     }
 
+    public function remove_row() {
+      $prod_id = $_GET['remove-row'];
+      if (array_key_exists($prod_id, $this->shopping_cart)) {
+        $size = $this->shopping_cart[$prod_id];
+        for ($i = 0; $i < $size; $i++) {
+          $this->shopping_cart[$prod_id]--;
+        }
+      }
+    }
+
     public function empty_cart() {
       foreach ($this->shopping_cart as $key => $value)
         $this->shopping_cart[$key] = 0;
+    }
+
+    public function get_items_count() {
+      $this->items = 0;
+      foreach ($this->inventory as $id => $info) 
+        if ($this->shopping_cart[$id] > 0)
+          $this->items += $this->shopping_cart[$id];
+      
+      return $this->items;
     }
 
     public function process_user_input() {
@@ -99,9 +133,13 @@
 
       if (!empty($_GET['empty-cart'])) 
         $this->empty_cart();
+
+      if (!empty($_GET['remove-row'])) 
+        $this->remove_row();
       
       if (!empty($_GET['checkout']))
-        $this->checkout();
+        if ($_GET['checkout'] != 'success')
+          $this->checkout();
     }
 
     public function checkout() {
@@ -115,15 +153,13 @@
       
       $this->conn->query($sql);
 
-      $products_ordered = 0;
       foreach ($this->shopping_cart as $product_id => $quantity) {
         if ($quantity > 0) {
-          $products_ordered++;
           $sql = 'insert into OrderLine (product_id, order_id, quantity) values ("'.$product_id.'", "'.session_id().'", "'.$quantity.'")';
-        
-          $this->conn->query($sql);
+          if (!$this->conn->query($sql)) {echo 'falied';};
         }
       }
-      header('Location: products.php?empty-cart=true');
+
+      header('Location: products.php?checkout=success&empty-cart=true');
     }
   }

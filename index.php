@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title></title>
+	<title>Welcome</title>
 	<link rel="stylesheet"  href="css/stylesheet.css" />
 </head>
 
@@ -29,7 +29,7 @@
 	<span style="float:right">
 	<?php 
 		if (isset($_SESSION['current_user'])) {
-			echo '<a>'.$_SESSION['current_user'].'</a> | <a href="logout.php" class="account">Logout</a>';
+			echo '<a style="color:white" href="myaccount.php">'.$_SESSION['current_user'].'</a> | <a href="logout.php" class="account">Logout</a>';
 		} else {
 			echo '<a class="account">Login</a>
 			|
@@ -81,14 +81,14 @@
 				<p>Email</p>
 				<input name="email" type="email">
 				<p>Password</p>
-				<input minlength="6" name="password" type="text">
+				<input minlength="6" name="password" type="password">
 
 				<input name="submit" type="submit" value="Login"/>
 			</form>
 		</div>
 	</div>
 
-			<!-- MUST BE LOGGED IN FOR THIS TO APPEAR ON THE DROPDOWN PANEL
+			<!-- MUST BE LOGGED IN FOR THIS TO APPEAR ON THE DROPDOWN PANEL -->
 				<div class="account-content">
 				<ul>
 					<li><a href="#">My Account</a></li>
@@ -97,7 +97,7 @@
 					<li><a href="#">Log Out</a></li>
 				</ul>
 			</div>
-			-->
+			
 		</div>
 
 
@@ -157,28 +157,38 @@
 			</form>
 			</div>
 		</div>
-
 		<div id="main" class="wrap"> <!-- start of main -->
+		<?php 
+			if (isset($_GET['login'])) 
+				if($_GET['login'] === 'invalid') 
+					echo '<h2 style="color:red">Invalid login</h2>';
+				else 
+					echo '<h2 style="color:green">Login success</h2>';
+		?>
 		<h2 style="margin:30px 0px 50px 0px; color:">Categories</h2>
 
 		<div class="cat_cont">
 			<a href=""><img src="images/icons/allCat.png" width="200" height="200"></a>
 			<h2 class="cat_con_text">All Categories</h2>
+			<p style="color:white;text-align:center">Under construction</p>
 		</div> 
 
 		<div class="cat_cont">
-			<a href=""><img src="images/icons/textbooks.png" width="200" height="200"></a>
+			<a href="products.php"><img src="images/icons/textbooks.png" width="200" height="200"></a>
 			<h2 class="cat_con_text">Text Books</h2>
+			<p style="color:#0098CB">&nbsp;</p>
 		</div>
 
 		<div class="cat_cont">
 			<a href="">	<img src="images/icons/stationary.png" width="200" height="200"></a>
 			<h2 class="cat_con_text">Stationary</h2>
+			<p style="color:white;text-align:center">Under construction</p>
 		</div>
 
 		<div class="cat_cont">
 			<a href="">	<img src="images/icons/computing.png" width="200" height="200"></a>
 			<h2 class="cat_con_text">Computing</h2>
+			<p style="color:white;text-align:center">Under construction</p>
 		</div>
 
 		</div> <!-- end main -->

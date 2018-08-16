@@ -22,9 +22,8 @@
           insert into Customer (first_name, last_name, cellphone, email, password)
           values ("'.$first_name.'", "'.$last_name.'", "'.$cellphone.'", "'.$email.'", "'.$hashed_password.'")
         ';
-        echo $sql;
-
         $conn->query($sql);
+        header('Location: index.php?login=success');
       }
     }
     else { echo $conn->error; }
