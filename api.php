@@ -70,7 +70,17 @@
             
             
               </a>
-              <h5 style="margin-top:30px">In stock: <?php echo $info['stock'] ?></h5>
+              <h5 style="margin-top:30px">
+              
+              <?php 
+                if ($info['stock'] == 0)
+                  echo '<span style="color:red">Out of stock</span>';
+                else
+                  echo 'In stock: '.$info['stock'];
+              ?>
+              
+              
+              </h5>
               <h6 style="margin-top:30px"><?php echo $this->shopping_cart[$id] ?> in your basket</h6>
               <h5 style="margin-top:30px">Subtotal: R<?php printf('%.2f',$info['price'] * $this->shopping_cart[$id])  ?></h5>
             </td>
@@ -148,15 +158,20 @@
         if ($_GET['checkout'] != 'success')
           $this->checkout();
 
-      if (!empty($_GET['checkout']))
-        if ($_GET['checkout'] == 'success') {
+      if (!empty($_GET['transaction']))
+        if ($_GET['transaction'] == 'true') {
           $this->init = false;
-          header('Location: products.php');
+          header('Location: products.php?transaction=success');
         }
           
     }
 
     public function checkout() {
+      if (count($this->inventory) > 0) 
+        foreach ($this->inventory as $id => $info) 
+          if ($info['stock'] == 0)
+            header('Location: products.php?transaction=invalid');
+
       $first_name = explode(' ', $_SESSION['current_user'])[0];
       $sql = 'select * from Customer where first_name = "'.$first_name.'"';
       if ($row = $this->conn->query($sql)->fetch_assoc()) {
@@ -181,6 +196,6 @@
         }
       }
 
-      header('Location: products.php?checkout=success&empty-cart=true');
+      //header('Location: products.php?transaction=true&empty-cart=true');
     }
   }

@@ -46,7 +46,7 @@
       <th style="vertical-align:top;width:25%">
         Subtotal
       </th>
-      <th "vertical-align:top;width:20%"></th>
+      <th style="vertical-align:top;width:20%"></th>
     </tr>
 
     <?php foreach ($store->inventory as $id => $info) {

@@ -112,11 +112,14 @@
 				  if($_GET['login'] === 'false') 
             echo '<h2 style="color:red">Please login</h2>';
             
-        if (isset($_GET['checkout']))
-          if ($_GET['checkout'] === 'success') {
+        if (isset($_GET['transaction']))
+          if ($_GET['transaction'] === 'success') {
             echo '<h2 style="color:green">Order successful</h2>';
-            echo '<h4 style="color:green">Thank you</h4>'; 
-          }
+						echo '<h4 style="color:green">Thank you</h4>'; 
+          } else {
+						echo '<h2 style="color:red">Order unsuccessful</h2>';
+						echo '<h4 style="color:red">Items out of stock</h4>'; 
+					}
 
         if (isset($_GET['cart']))
           if ($_GET['cart'] === 'empty')

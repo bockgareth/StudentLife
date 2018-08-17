@@ -54,7 +54,6 @@
         on OrderLine.order_id = OrderTable.order_id 
         join Customer on OrderTable.customer_id = Customer.customer_id
         where Customer.first_name = "'.$first_name.'"';
-        echo $sql;
         if ($result = $store->conn->query($sql)) {
           while (($row = $result->fetch_assoc()) != NULL) { ?>
             <tr>
