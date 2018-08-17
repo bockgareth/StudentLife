@@ -33,12 +33,13 @@
 <h4 style="display:inline-block"><a href="index.php">Back to home</a></h4> |
 <h4 style="display:inline-block"><a href="products.php">Back to products</a></h4>
 <h1>History</h1>
-  <table>
+  <table >
     <tr>
       <th>Quantity</th>
       <th>Name</th>
       <th>Price</th>
       <th>Date of purchase</th>
+      <th>Delivery date</th>
     </tr>
     <?php 
       $first_name = explode(' ', $_SESSION['current_user'])[0];
@@ -46,7 +47,7 @@
       echo $first_name;
       echo '<br><br>';
       $sql = '
-      select OrderLine.quantity, Product.product_name, Product.price, OrderTable.date_of_purchase 
+      select OrderLine.quantity, Product.product_name, Product.price, OrderTable.date_of_purchase, OrderTable.delivery_date 
         from OrderLine 
         join Product 
         on OrderLine.product_id = Product.product_id 
@@ -61,6 +62,7 @@
               <td><?php echo $row['product_name']; ?></td>
               <td><?php echo $row['price']; ?></td>
               <td><?php echo $row['date_of_purchase']; ?></td>
+              <td><?php echo $row['delivery_date']; ?></td>
             </tr>
           <?php }
         }

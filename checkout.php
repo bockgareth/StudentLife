@@ -40,33 +40,34 @@
       <th style="width:35%"> 
         Name
       </th>
-      <th style="vertical-align:top; width:20%; padding-left:10px;">
+      <th style="vertical-align:top; width:20%; padding-left:200px;">
         # in basket
       </th>
-      <th style="vertical-align:top;width:25%">
+      <th style="vertical-align:top;width:30%">
         Subtotal
       </th>
-      <th style="vertical-align:top;width:20%"></th>
+      <th style="vertical-align:top"></th>
     </tr>
 
     <?php foreach ($store->inventory as $id => $info) {
       if ($store->shopping_cart[$id] > 0) { ?>
       <tr style="display:block;border-bottom: 2px solid #e0e0e0; padding-bottom:2%; margin-bottom:20px;">
-      <td style="width:35%"> 
+      <td style="width:55%"> 
         <?php echo $info['name'] ?>
       </td>
-      <td style="vertical-align:top; width:20%; padding-left:10px;">
+      <td style="vertical-align:top; width:15%; padding-left:10px;">
         <?php echo $store->shopping_cart[$id] ?>
       </td>
-      <td style="vertical-align:top;width:25%">
+      <td style="vertical-align:top;width:20%">
         R<?php printf('%.2f',$info['price'] * $store->shopping_cart[$id]) ?>
       </td>
-      <td style="vertical-align:top;width:20%">
+      <td style="vertical-align:top;width:25%">
         <a href="<?php echo $_SERVER['SCRIPT_NAME']; ?>?phpsessid=<?php echo session_id(); ?>&remove-row=<?php echo $id ?>">Remove this row</a>
       </td>
     </tr>   
       <?php }} ?>
   </table> 
+  <h1>Total: R<?php echo $store->total; ?></h1>
   <h3><a href="<?php echo $_SERVER['SCRIPT_NAME']; ?>?phpsessid=<?php echo session_id(); ?>&checkout=true">Confirm checkout</a></h3>
   <h4><a href="products.php">Back to products</a></h4>
 </body>

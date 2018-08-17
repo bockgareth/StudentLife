@@ -52,16 +52,63 @@
 				<div id="right-block" style="clear:right;margin-bottom:10px">
 					<ul>
 						<a href="#" style="color:white"><li class="icon-container dropdown"><img src="images/favourite icon.png" /><span class="icon-pos">0</span></a>
-						<div class="dropdown-content">
+						<!-- <div class="dropdown-content">
 							<ul>
 								<li>Java <span style="float:right">R600</span></li>
 								<li><a href=""><button style="width:100%; height:40px;color:white;background-color: #0497c3;border:none;">View wishlist</button></a></li>
 							</ul>
-						</div>
+						</div> -->
 						</li>
-						<a href="#" style="color:white"><li class="icon-container dropdown"><img src="images/cart.png" /><span class="icon-pos"><?php echo $store->get_items_count(); ?></span></a>
-							<div class="dropdown-content">
-								<ul>
+						<a href="checkout.php?phpsessid=<?php echo session_id(); ?>" style="color:white"><li class="icon-container dropdown"><img src="images/cart.png" /><span class="icon-pos"><?php echo $store->get_items_count(); ?></span></a>
+							<!-- REGISTRATION POP-UP -->
+	<div id="register" class="modal-box">
+
+<div class="box-content">
+	<span class="exit">x</span>
+
+	<h1 style="text-align:center;margin-bottom:50px">Register</h1>
+
+	<form action="signup.php" method="POST" class="acc_form">
+		<p>First name</p>
+		<input required minlength="2" name="firstName" type="text">
+		<p>Last name</p>
+		<input required minlength="2" name="lastName"ype="text">
+		<p>Cellphone</p>
+		<input required minlength="9" name="cellphone" type="text">
+		<p>Email</p>
+		<input required name="email" type="email">
+		<p>Password</p>
+		<input required minlength="6" name="password" type="password">
+
+		<input name="submit" type="submit" value="Create Account"/>
+	</form>
+
+</div>
+
+</div>
+
+
+<!-- LOGIN POP-UP -->
+
+<div id="login" class="modal-box">
+
+<div class="box-content">
+	<span class="exit">x</span>
+
+	<h1 style="text-align:center;margin-bottom:50px">Log In</h1>
+
+	<form action="signin.php" method="POST" class="acc_form">
+		<p>Email</p>
+		<input name="email" type="email">
+		<p>Password</p>
+		<input minlength="6" name="password" type="password">
+
+		<input name="submit" type="submit" value="Login"/>
+	</form>
+</div>
+</div>
+							<!-- <div class="dropdown-content"> -->
+								<!-- <ul>
 									<li>Java <span style="float:right">R600</span></li>
 									<li>
 										<span style="color:#124b75">subtotal</span><span style="float:right">R600</span></a>
@@ -70,13 +117,13 @@
 										<a href="#"><button style="width:110px; height:40px;color:white;background-color: #0497c3;border:none;">Cart</button></a>
 										<a href="#"><button style="width:110px; height:40px;float: right;color:white;background-color: #0497c3;border:none;">Check out</button></a>
 									</li>
-								</ul>
-							</div>
+								</ul> -->
+							<!-- </div> -->
 						</li>
 					</ul>
 				</div>
 			</div>
-		</div> <!-- end header -->
+		</div> <!--end header -->
 
 		<div id="nav"> <!-- start nav -->
 			<div class="wrap">
@@ -186,6 +233,44 @@
 		<!-- <div id="footer" class="wrap"> start of footer -->
 
 		</div> <!-- end footer -->
+		<script type="text/javascript">
+
+
+var regBox = document.getElementById('register');
+var logBox = document.getElementById('login');
+
+var regExit = document.getElementsByClassName("exit")[0];
+var logExit = document.getElementsByClassName("exit")[1];
+
+var login = document.getElementsByClassName("account")[0];
+var register = document.getElementsByClassName("account")[1];
+
+
+login.onclick = function() {
+	logBox.style.display = "block";
+}
+register.onclick = function() {
+	regBox.style.display = "block";
+}
+
+logExit.onclick = function() {
+	logBox.style.display = "none";
+}
+
+regExit.onclick = function() {
+	regBox.style.display = "none";
+}
+
+window.onclick = function(event) {
+	if (event.target == logBox) {
+		logBox.style.display = "none";
+	}
+	else if (event.target == regBox) {
+		regBox.style.display = "none";
+	}
+}
+
+</script>
 </body>
 
 </html>

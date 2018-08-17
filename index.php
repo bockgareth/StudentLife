@@ -89,14 +89,14 @@
 	</div>
 
 			<!-- MUST BE LOGGED IN FOR THIS TO APPEAR ON THE DROPDOWN PANEL -->
-				<div class="account-content">
+				<!-- <div class="account-content">
 				<ul>
 					<li><a href="#">My Account</a></li>
 					<li><a href="#">My Cart</a></li>
 					<li><a href="#">My Favourites</a></li>
 					<li><a href="#">Log Out</a></li>
 				</ul>
-			</div>
+			</div> -->
 			
 		</div>
 
