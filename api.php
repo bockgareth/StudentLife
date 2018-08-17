@@ -66,8 +66,6 @@
                   echo '<img src="images/cartUnshop.png" width="" height="">';
                 }
               ?>
-              
-            
             
               </a>
               <h5 style="margin-top:30px">
@@ -167,11 +165,6 @@
     }
 
     public function checkout() {
-      if (count($this->inventory) > 0) 
-        foreach ($this->inventory as $id => $info) 
-          if ($info['stock'] == 0)
-            header('Location: products.php?transaction=invalid');
-
       $first_name = explode(' ', $_SESSION['current_user'])[0];
       $sql = 'select * from Customer where first_name = "'.$first_name.'"';
       if ($row = $this->conn->query($sql)->fetch_assoc()) {
@@ -196,6 +189,6 @@
         }
       }
 
-      //header('Location: products.php?transaction=true&empty-cart=true');
+      header('Location: products.php?transaction=true&empty-cart=true');
     }
   }
