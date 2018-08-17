@@ -56,7 +56,7 @@
             </td>
             <td style="vertical-align:top;width:13%">
               <h3 style="margin-top:0px; margin-bottom:30%">R<?php echo $info['price'] ?></h3>
-              <a href="<?php echo $_SERVER['SCRIPT_NAME']; ?>?phpsessid=<?php echo session_id(); ?>&item-to-remove=<?php echo $id ?>"><img style="margin-right:15px" src="images/prodUnfav.png"></a>
+              <a href="<?php echo $_SERVER['SCRIPT_NAME']; ?>?phpsessid=<?php echo session_id(); ?>&item-to-remove=<?php echo $id ?>"><img style="margin-right:15px" src="images/x_icon.png"></a>
               <a href="<?php echo $_SERVER['SCRIPT_NAME']; ?>?phpsessid=<?php echo session_id(); ?>&item-to-add=<?php echo $id ?>">
               
               <?php
