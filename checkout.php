@@ -68,7 +68,25 @@
       <?php }} ?>
   </table> 
   <h1>Total: R<?php echo $store->total; ?></h1>
-  <h3><a href="<?php echo $_SERVER['SCRIPT_NAME']; ?>?phpsessid=<?php echo session_id(); ?>&checkout=true">Confirm checkout</a></h3>
+  <input type="checkbox" id="terms" onClick="checkbox()"><a href="code.pdf" target="_blank" type="application/pdf">Accept the terms and agreement</a>
+  <h3 id="confirm"></h3>
   <h4><a href="products.php">Back to products</a></h4>
+
+  <script>
+    function checkbox() {
+      const check = document.getElementById('terms').checked;
+
+      if (check) {
+        console.log('display');
+        document.getElementById('confirm').innerHTML = '<a href="<?php echo $_SERVER['SCRIPT_NAME']; ?>?phpsessid=<?php echo session_id(); ?>&checkout=true">Confirm checkout</a>';
+      }
+      else {
+        console.log('not not');
+
+        document.getElementById('confirm').innerHTML = '';
+      }
+      
+    }
+  </script>
 </body>
 </html>
