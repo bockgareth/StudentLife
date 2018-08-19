@@ -135,15 +135,15 @@
 						<a href="#" style="color:white">
 						<li class="icon-container dropdown"><img src="images/favourite icon.png" /><span class="icon-pos">0</span>
 						</a>
-						<div class="dropdown-content">
+						<!-- <div class="dropdown-content">
 							<ul>
 								<li>Java <span style="float:right">R600</span></li>
 								<li><a href=""><button style="width:100%; height:40px;color:white;background-color: #0497c3;border:none;">View wishlist</button></a></li>
 							</ul>
-						</div>
+						</div> -->
 						</li>
 						<a href="#" style="color:white"><li class="icon-container dropdown"><img src="images/cart.png" /><span class="icon-pos">0</span></a>
-							<div class="dropdown-content">
+							<!-- <div class="dropdown-content">
 								<ul>
 									<li>Java <span style="float:right">R600</span></li>
 									<li>
@@ -154,12 +154,13 @@
 										<a href="#"><button style="width:110px; height:40px;float: right;color:white;background-color: #0497c3;border:none;">Check out</button></a>
 									</li>
 								</ul>
-							</div>
+							</div> -->
 						</li>
 					</ul>
 				</div>
 			</div>
 		</div> <!-- end header -->
+    <div class="wrap">
   <table style="width:100%;border-collapse:collapse">
     <tr style="display:block;border-bottom: 2px solid #e0e0e0; padding-bottom:2%; margin-bottom:20px;">
       <th style="width:35%"> 
@@ -196,7 +197,7 @@
   <input type="checkbox" id="terms" onClick="checkbox()"><a href="Student Life Terms and Conditions.pdf" target="_blank" type="application/pdf">Accept the terms and agreement</a>
   <h3 id="confirm"></h3>
   <h4><a href="products.php">Back to products</a></h4>
-
+  </div>
   <script>
     function checkbox() {
       const check = document.getElementById('terms').checked;

@@ -130,15 +130,15 @@
 						<a href="#" style="color:white">
 						<li class="icon-container dropdown"><img src="images/favourite icon.png" /><span class="icon-pos">0</span>
 						</a>
-						<div class="dropdown-content">
+						<!-- <div class="dropdown-content">
 							<ul>
 								<li>Java <span style="float:right">R600</span></li>
 								<li><a href=""><button style="width:100%; height:40px;color:white;background-color: #0497c3;border:none;">View wishlist</button></a></li>
 							</ul>
-						</div>
+						</div> -->
 						</li>
 						<a href="#" style="color:white"><li class="icon-container dropdown"><img src="images/cart.png" /><span class="icon-pos">0</span></a>
-							<div class="dropdown-content">
+							<!-- <div class="dropdown-content">
 								<ul>
 									<li>Java <span style="float:right">R600</span></li>
 									<li>
@@ -149,12 +149,13 @@
 										<a href="#"><button style="width:110px; height:40px;float: right;color:white;background-color: #0497c3;border:none;">Check out</button></a>
 									</li>
 								</ul>
-							</div>
+							</div> -->
 						</li>
 					</ul>
 				</div>
 			</div>
 		</div> <!-- end header -->
+    <div class="wrap">
 <h4 style="display:inline-block"><a href="index.php">Back to home</a></h4> |
 <h4 style="display:inline-block"><a href="products.php">Back to products</a></h4>
 <h1>History</h1>
@@ -193,5 +194,6 @@
         }
     ?>
   </table>
+  </div>
 </body>
 </html>
