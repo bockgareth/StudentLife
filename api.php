@@ -60,10 +60,12 @@
               <a href="<?php echo $_SERVER['SCRIPT_NAME']; ?>?phpsessid=<?php echo session_id(); ?>&item-to-add=<?php echo $id ?>">
               
               <?php
-                if ($this->shopping_cart[$id] > 0) {
-                  echo '<img src="images/cartShop.png" width="" height="">';
-                } else {
-                  echo '<img src="images/cartUnshop.png" width="" height="">';
+                if ($info['stock'] != 0) {
+                  if ($this->shopping_cart[$id] > 0) {
+                    echo '<img src="images/cartShop.png" width="" height="">';
+                  } else {
+                    echo '<img src="images/cartUnshop.png" width="" height="">';
+                  }
                 }
               ?>
             

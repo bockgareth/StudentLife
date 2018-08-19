@@ -29,7 +29,7 @@
 	<span style="float:right">
 	<?php 
 		if (isset($_SESSION['current_user'])) {
-			echo '<a style="color:white" href="myaccount.php">'.$_SESSION['current_user'].'</a> | <a href="logout.php" class="account">Logout</a>';
+			echo '<a style="color:white" href="myaccount.php">'.$_SESSION['current_user'].'</a> | <a href="logout.php" class="account">Logout</a> | <a style="color:white" href="about.php" class="account">About</a>';
 		} else {
 			echo '<a class="account">Login</a>
 			|

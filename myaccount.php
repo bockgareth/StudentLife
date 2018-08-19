@@ -32,7 +32,7 @@
 <body>
 <div id="header"> <!-- start of header -->
 	<div class="wrap">
-		<a href="#"><img src="images/Logo.png" alt="" style="margin-top:10px"/></a>
+		<a href="index.php"><img src="images/Logo.png" alt="" style="margin-top:10px"/></a>
 		<div class="dropdown" style="float:right;margin-top:10px;padding-bottom:10px">
 
 		<!-- DROPDOWN PANEL -->
@@ -185,7 +185,7 @@
             <tr>
               <td><?php echo $row['quantity']; ?></td>
               <td><?php echo $row['product_name']; ?></td>
-              <td><?php echo $row['price']; ?></td>
+              <td>R<?php echo $row['price']; ?></td>
               <td><?php echo $row['date_of_purchase']; ?></td>
               <td><?php echo $row['delivery_date']; ?></td>
             </tr>

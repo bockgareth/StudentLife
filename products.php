@@ -27,6 +27,7 @@
 <body>
 		<div id="header"> <!-- start of header -->
 			<div class="wrap">
+			<a href="index.php"><img src="images/Logo.png" alt="" style="margin-top:10px"/></a>
     	<span style="float:right">
       <?php
       if (isset($_SESSION['current_user'])) {

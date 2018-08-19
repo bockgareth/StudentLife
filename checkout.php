@@ -37,7 +37,7 @@
 <body>
 <div id="header"> <!-- start of header -->
 	<div class="wrap">
-		<a href="#"><img src="images/Logo.png" alt="" style="margin-top:10px"/></a>
+		<a href="index.php"><img src="images/Logo.png" alt="" style="margin-top:10px"/></a>
 		<div class="dropdown" style="float:right;margin-top:10px;padding-bottom:10px">
 
 		<!-- DROPDOWN PANEL -->
